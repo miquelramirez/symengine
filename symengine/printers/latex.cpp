@@ -3,6 +3,46 @@
 namespace SymEngine
 {
 
+LatexPrinter::NameTable::NameTable()
+{
+    init_str_printer_names(names_);
+    for (unsigned i = 0; i < names_.size(); i++) {
+        if (names_[i] != "") {
+            names_[i] = "\\operatorname{" + names_[i] + "}";
+        }
+    }
+    names_[SIN] = "\\sin";
+    names_[COS] = "\\cos";
+    names_[TAN] = "\\tan";
+    names_[COT] = "\\cot";
+    names_[CSC] = "\\csc";
+    names_[SEC] = "\\sec";
+    names_[ATAN2] = "\\operatorname{atan_2}";
+    names_[SINH] = "\\sinh";
+    names_[COSH] = "\\cosh";
+    names_[TANH] = "\\tanh";
+    names_[COTH] = "\\coth";
+    names_[LOG] = "\\log";
+    names_[ZETA] = "\\zeta";
+    names_[LAMBERTW] = "\\operatorname{W}";
+    names_[DIRICHLET_ETA] = "\\eta";
+    names_[KRONECKERDELTA] = "\\delta_";
+    names_[LEVICIVITA] = "\\varepsilon_";
+    names_[LOWERGAMMA] = "\\gamma";
+    names_[UPPERGAMMA] = "\\Gamma";
+    names_[BETA] = "\\operatorname{B}";
+    names_[LOG] = "\\log";
+    names_[GAMMA] = "\\Gamma";
+}
+
+const LatexPrinter::NameTable&
+LatexPrinter::NameTable::instance() {
+    static NameTable the_table;
+
+    return the_table;
+}
+
+
 std::string latex(const Basic &x)
 {
     LatexPrinter p;
@@ -395,47 +435,10 @@ bool LatexPrinter::split_mul_coef()
     return true;
 }
 
-std::vector<std::string> init_latex_printer_names()
-{
-    std::vector<std::string> names = init_str_printer_names();
-
-    for (unsigned i = 0; i < names.size(); i++) {
-        if (names[i] != "") {
-            names[i] = "\\operatorname{" + names[i] + "}";
-        }
-    }
-    names[SIN] = "\\sin";
-    names[COS] = "\\cos";
-    names[TAN] = "\\tan";
-    names[COT] = "\\cot";
-    names[CSC] = "\\csc";
-    names[SEC] = "\\sec";
-    names[ATAN2] = "\\operatorname{atan_2}";
-    names[SINH] = "\\sinh";
-    names[COSH] = "\\cosh";
-    names[TANH] = "\\tanh";
-    names[COTH] = "\\coth";
-    names[LOG] = "\\log";
-    names[ZETA] = "\\zeta";
-    names[LAMBERTW] = "\\operatorname{W}";
-    names[DIRICHLET_ETA] = "\\eta";
-    names[KRONECKERDELTA] = "\\delta_";
-    names[LEVICIVITA] = "\\varepsilon_";
-    names[LOWERGAMMA] = "\\gamma";
-    names[UPPERGAMMA] = "\\Gamma";
-    names[BETA] = "\\operatorname{B}";
-    names[LOG] = "\\log";
-    names[GAMMA] = "\\Gamma";
-    return names;
-}
-
-const std::vector<std::string> LatexPrinter::names_
-    = init_latex_printer_names();
-
 void LatexPrinter::bvisit(const Function &x)
 {
     std::ostringstream o;
-    o << names_[x.get_type_code()] << "{";
+    o << NameTable::instance()[x.get_type_code()] << "{";
     vec_basic vec = x.get_args();
     o << parenthesize(apply(vec)) << "}";
     str_ = o.str();

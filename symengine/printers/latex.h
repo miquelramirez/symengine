@@ -11,6 +11,20 @@ class LatexPrinter : public BaseVisitor<LatexPrinter, StrPrinter>
 public:
     using StrPrinter::bvisit;
 
+    class NameTable {
+    private:
+        NameTable();
+        ~NameTable() = default;
+    public:
+        static const NameTable&     instance();
+    // interface
+        template <typename SymbolID>
+        std::string operator[](const SymbolID& sym_id) const { return names_[sym_id]; }
+    private:
+        std::vector<std::string>    names_;
+    };
+
+
     void bvisit(const Symbol &x);
     void bvisit(const Rational &x);
     void bvisit(const Complex &x);
@@ -47,8 +61,6 @@ public:
     void bvisit(const LessThan &x);
     void bvisit(const StrictLessThan &x);
 
-private:
-    static const std::vector<std::string> names_;
 
 protected:
     void print_with_args(const Basic &x, const std::string &join,

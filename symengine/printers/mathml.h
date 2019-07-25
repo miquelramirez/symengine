@@ -12,6 +12,19 @@ protected:
     std::ostringstream s;
 
 public:
+    class NameTable {
+    private:
+        NameTable();
+        ~NameTable() = default;
+    public:
+        static const NameTable&     instance();
+    // interface
+        template <typename SymbolID>
+        std::string operator[](const SymbolID& sym_id) const { return names_[sym_id]; }
+    private:
+        std::vector<std::string>    names_;
+    };
+
     static const std::vector<std::string> names_;
     void bvisit(const Basic &x);
     void bvisit(const Symbol &x);

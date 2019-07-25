@@ -833,7 +833,7 @@ std::string StrPrinter::apply(const vec_basic &d)
 void StrPrinter::bvisit(const Function &x)
 {
     std::ostringstream o;
-    o << names_[x.get_type_code()];
+    o << NameTable::instance()[x.get_type_code()];
     vec_basic vec = x.get_args();
     o << parenthesize(apply(vec));
     str_ = o.str();
@@ -1017,61 +1017,70 @@ std::string StrPrinter::apply(const Basic &b)
     return str_;
 }
 
-std::vector<std::string> init_str_printer_names()
-{
-    std::vector<std::string> names;
-    names.assign(TypeID_Count, "");
-    names[SIN] = "sin";
-    names[COS] = "cos";
-    names[TAN] = "tan";
-    names[COT] = "cot";
-    names[CSC] = "csc";
-    names[SEC] = "sec";
-    names[ASIN] = "asin";
-    names[ACOS] = "acos";
-    names[ASEC] = "asec";
-    names[ACSC] = "acsc";
-    names[ATAN] = "atan";
-    names[ACOT] = "acot";
-    names[ATAN2] = "atan2";
-    names[SINH] = "sinh";
-    names[CSCH] = "csch";
-    names[COSH] = "cosh";
-    names[SECH] = "sech";
-    names[TANH] = "tanh";
-    names[COTH] = "coth";
-    names[ASINH] = "asinh";
-    names[ACSCH] = "acsch";
-    names[ACOSH] = "acosh";
-    names[ATANH] = "atanh";
-    names[ACOTH] = "acoth";
-    names[ASECH] = "asech";
-    names[LOG] = "log";
-    names[LAMBERTW] = "lambertw";
-    names[ZETA] = "zeta";
-    names[DIRICHLET_ETA] = "dirichlet_eta";
-    names[KRONECKERDELTA] = "kroneckerdelta";
-    names[LEVICIVITA] = "levicivita";
-    names[FLOOR] = "floor";
-    names[CEILING] = "ceiling";
-    names[ERF] = "erf";
-    names[ERFC] = "erfc";
-    names[LOWERGAMMA] = "lowergamma";
-    names[UPPERGAMMA] = "uppergamma";
-    names[BETA] = "beta";
-    names[LOGGAMMA] = "loggamma";
-    names[LOG] = "log";
-    names[POLYGAMMA] = "polygamma";
-    names[GAMMA] = "gamma";
-    names[ABS] = "abs";
-    names[MAX] = "max";
-    names[MIN] = "min";
-    names[SIGN] = "sign";
-    names[CONJUGATE] = "conjugate";
-    return names;
+void init_str_printer_names(std::vector<std::string>& table) {
+    table.assign(TypeID_Count, "");
+    table[SIN] = "sin";
+    table[COS] = "cos";
+    table[TAN] = "tan";
+    table[COT] = "cot";
+    table[CSC] = "csc";
+    table[SEC] = "sec";
+    table[ASIN] = "asin";
+    table[ACOS] = "acos";
+    table[ASEC] = "asec";
+    table[ACSC] = "acsc";
+    table[ATAN] = "atan";
+    table[ACOT] = "acot";
+    table[ATAN2] = "atan2";
+    table[SINH] = "sinh";
+    table[CSCH] = "csch";
+    table[COSH] = "cosh";
+    table[SECH] = "sech";
+    table[TANH] = "tanh";
+    table[COTH] = "coth";
+    table[ASINH] = "asinh";
+    table[ACSCH] = "acsch";
+    table[ACOSH] = "acosh";
+    table[ATANH] = "atanh";
+    table[ACOTH] = "acoth";
+    table[ASECH] = "asech";
+    table[LOG] = "log";
+    table[LAMBERTW] = "lambertw";
+    table[ZETA] = "zeta";
+    table[DIRICHLET_ETA] = "dirichlet_eta";
+    table[KRONECKERDELTA] = "kroneckerdelta";
+    table[LEVICIVITA] = "levicivita";
+    table[FLOOR] = "floor";
+    table[CEILING] = "ceiling";
+    table[ERF] = "erf";
+    table[ERFC] = "erfc";
+    table[LOWERGAMMA] = "lowergamma";
+    table[UPPERGAMMA] = "uppergamma";
+    table[BETA] = "beta";
+    table[LOGGAMMA] = "loggamma";
+    table[LOG] = "log";
+    table[POLYGAMMA] = "polygamma";
+    table[GAMMA] = "gamma";
+    table[ABS] = "abs";
+    table[MAX] = "max";
+    table[MIN] = "min";
+    table[SIGN] = "sign";
+    table[CONJUGATE] = "conjugate";
 }
 
-const std::vector<std::string> StrPrinter::names_ = init_str_printer_names();
+StrPrinter::NameTable::NameTable()
+{
+    init_str_printer_names(names_);
+}
+
+const StrPrinter::NameTable&
+StrPrinter::NameTable::instance() {
+    static NameTable the_table;
+
+    return the_table;
+}
+
+//const std::vector<std::string> StrPrinter::names_ = init_str_printer_names();
 
 std::string StrPrinter::print_mul()
 {

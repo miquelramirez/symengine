@@ -6,25 +6,29 @@
 namespace SymEngine
 {
 
-std::vector<std::string> init_mathml_printer_names()
+MathMLPrinter::NameTable::NameTable()
 {
-    std::vector<std::string> names = init_str_printer_names();
-    names[ASIN] = "arcsin";
-    names[ACOS] = "arccos";
-    names[ASEC] = "arcsec";
-    names[ACSC] = "arccsc";
-    names[ATAN] = "arctan";
-    names[ACOT] = "arccot";
-    names[ASINH] = "arcsinh";
-    names[ACSCH] = "arccsch";
-    names[ACOSH] = "arccosh";
-    names[ATANH] = "arctanh";
-    names[ACOTH] = "arccoth";
-    names[ASECH] = "arcsech";
-    return names;
+    init_str_printer_names(names_);
+    names_[ASIN] = "arcsin";
+    names_[ACOS] = "arccos";
+    names_[ASEC] = "arcsec";
+    names_[ACSC] = "arccsc";
+    names_[ATAN] = "arctan";
+    names_[ACOT] = "arccot";
+    names_[ASINH] = "arcsinh";
+    names_[ACSCH] = "arccsch";
+    names_[ACOSH] = "arccosh";
+    names_[ATANH] = "arctanh";
+    names_[ACOTH] = "arccoth";
+    names_[ASECH] = "arcsech";
 }
-const std::vector<std::string> MathMLPrinter::names_
-    = init_mathml_printer_names();
+
+const MathMLPrinter::NameTable&
+MathMLPrinter::NameTable::instance() {
+    static NameTable the_table;
+
+    return the_table;
+}
 
 void MathMLPrinter::bvisit(const Basic &x)
 {
@@ -259,7 +263,7 @@ void MathMLPrinter::bvisit(const Constant &x)
 void MathMLPrinter::bvisit(const Function &x)
 {
     s << "<apply>";
-    s << "<" << names_[x.get_type_code()] << "/>";
+    s << "<" << NameTable::instance()[x.get_type_code()] << "/>";
     const auto &args = x.get_args();
     for (const auto &arg : args) {
         arg->accept(*this);

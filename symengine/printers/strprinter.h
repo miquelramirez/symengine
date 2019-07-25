@@ -103,12 +103,23 @@ public:
     PrecedenceEnum getPrecedence(const RCP<const Basic> &x);
 };
 
-std::vector<std::string> init_str_printer_names();
+void init_str_printer_names(std::vector<std::string>& table);
 
 class StrPrinter : public BaseVisitor<StrPrinter>
 {
-private:
-    static const std::vector<std::string> names_;
+public:
+    class NameTable {
+    private:
+        NameTable();
+        ~NameTable() = default;
+    public:
+        static const NameTable&     instance();
+    // interface
+        template <typename SymbolID>
+        std::string operator[](const SymbolID& sym_id) const { return names_[sym_id]; }
+    private:
+        std::vector<std::string>    names_;
+    };
 
 protected:
     std::string str_;
