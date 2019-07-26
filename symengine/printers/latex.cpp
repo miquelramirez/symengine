@@ -11,28 +11,29 @@ LatexPrinter::NameTable::NameTable()
             names_[i] = "\\operatorname{" + names_[i] + "}";
         }
     }
-    names_[SIN] = "\\sin";
-    names_[COS] = "\\cos";
-    names_[TAN] = "\\tan";
-    names_[COT] = "\\cot";
-    names_[CSC] = "\\csc";
-    names_[SEC] = "\\sec";
-    names_[ATAN2] = "\\operatorname{atan_2}";
-    names_[SINH] = "\\sinh";
-    names_[COSH] = "\\cosh";
-    names_[TANH] = "\\tanh";
-    names_[COTH] = "\\coth";
-    names_[LOG] = "\\log";
-    names_[ZETA] = "\\zeta";
-    names_[LAMBERTW] = "\\operatorname{W}";
-    names_[DIRICHLET_ETA] = "\\eta";
-    names_[KRONECKERDELTA] = "\\delta_";
-    names_[LEVICIVITA] = "\\varepsilon_";
-    names_[LOWERGAMMA] = "\\gamma";
-    names_[UPPERGAMMA] = "\\Gamma";
-    names_[BETA] = "\\operatorname{B}";
-    names_[LOG] = "\\log";
-    names_[GAMMA] = "\\Gamma";
+    names[SIN] = "\\sin";
+    names[COS] = "\\cos";
+    names[TAN] = "\\tan";
+    names[COT] = "\\cot";
+    names[CSC] = "\\csc";
+    names[SEC] = "\\sec";
+    names[ATAN2] = "\\operatorname{atan_2}";
+    names[SINH] = "\\sinh";
+    names[COSH] = "\\cosh";
+    names[TANH] = "\\tanh";
+    names[COTH] = "\\coth";
+    names[LOG] = "\\log";
+    names[ZETA] = "\\zeta";
+    names[LAMBERTW] = "\\operatorname{W}";
+    names[DIRICHLET_ETA] = "\\eta";
+    names[KRONECKERDELTA] = "\\delta_";
+    names[LEVICIVITA] = "\\varepsilon_";
+    names[LOWERGAMMA] = "\\gamma";
+    names[UPPERGAMMA] = "\\Gamma";
+    names[BETA] = "\\operatorname{B}";
+    names[LOG] = "\\log";
+    names[GAMMA] = "\\Gamma";
+    names[TRUNCATE] = "\\operatorname{truncate}";
 }
 
 const LatexPrinter::NameTable&

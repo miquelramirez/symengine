@@ -1052,6 +1052,7 @@ void init_str_printer_names(std::vector<std::string>& table) {
     table[LEVICIVITA] = "levicivita";
     table[FLOOR] = "floor";
     table[CEILING] = "ceiling";
+    table[TRUNCATE] = "truncate";
     table[ERF] = "erf";
     table[ERFC] = "erfc";
     table[LOWERGAMMA] = "lowergamma";

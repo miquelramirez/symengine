@@ -332,6 +332,8 @@ CWRAPPER_OUTPUT_TYPE basic_zeta(basic s, const basic a);
 CWRAPPER_OUTPUT_TYPE basic_dirichlet_eta(basic s, const basic a);
 //! Assigns s = gamma(a).
 CWRAPPER_OUTPUT_TYPE basic_gamma(basic s, const basic a);
+//! Assigns s = loggamma(a).
+CWRAPPER_OUTPUT_TYPE basic_loggamma(basic s, const basic a);
 //! Assigns s = sqrt(a).
 CWRAPPER_OUTPUT_TYPE basic_sqrt(basic s, const basic a);
 //! Assigns s = cbrt(a).
@@ -349,6 +351,14 @@ char *basic_str(const basic s);
 //! Returns a new char pointer to the string representation of s.
 //! Compatible with Julia
 char *basic_str_julia(const basic s);
+//! Printing mathml
+char *basic_str_mathml(const basic s);
+//! Printing latex string
+char *basic_str_latex(const basic s);
+//! Printing C code
+char *basic_str_ccode(const basic s);
+//! Printing JavaScript code
+char *basic_str_jscode(const basic s);
 //! Frees the string s
 void basic_str_free(char *s);
 
